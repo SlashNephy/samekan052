@@ -1,13 +1,13 @@
 # samekan052
 Twitter ユーザのツイートを素材にして文章を生成するやつ
 
-Demo => [samekan052.vercel.app](https://samekan052.vercel.app/)
-
 ## Docker Hub
 
 Docker Hub に [@samekan822](https://twitter.com/samekan822) のツイートで学習済のイメージを公開しています。GitHub Actions により1時間おきにフレッシュなツイートで学習され, 自動でイメージとして公開されます。
 
 [![Docker Image Size (tag)](https://img.shields.io/docker/image-size/slashnephy/samekan052/latest)](https://hub.docker.com/r/slashnephy/samekan052)
+
+Demo => [samekan.starry.blue](https://samekan.starry.blue)
 
 `docker-compose.yml`
 
