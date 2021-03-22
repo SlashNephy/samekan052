@@ -47,16 +47,16 @@ RUN mkdir dist
 
 COPY testMecab.py fetchTweets.py generateModel.py /app/
 
-ADD http://worldtimeapi.org/api/timezone/America/Los_Angeles /tmp/cacheburst
-
 ARG MECAB_DICTIONARY_PATH=/usr/local/lib/mecab/dic/mecab-ipadic-neologd
 ARG USERS=samekan822
 ARG TWITTER_CK
 ARG TWITTER_CS
 ARG TWITTER_AT
 ARG TWITTER_ATS
-RUN python testMecab.py \
-    && python fetchTweets.py \
+RUN python testMecab.py
+
+ADD http://worldclockapi.com/api/json/utc/now /tmp/cacheburst
+RUN python fetchTweets.py \
     && python generateModel.py \
     && rm /tmp/cacheburst
 
