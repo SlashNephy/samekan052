@@ -5,9 +5,6 @@ on:
 
   workflow_dispatch:
 
-env:
-  DOCKER_BASE_NAME: slashnephy/samekan052
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -22,21 +19,56 @@ jobs:
       - name: Login to DockerHub
         uses: docker/login-action@v1 
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GHCR_PAT }}
 
-      - name: Build & Push
+      - name: Build & Push (samekan052)
         uses: docker/build-push-action@v2
         env:
           DOCKER_BUILDKIT: 1
         with:
           file: ci.Dockerfile
           push: true
-          tags: ${{ env.DOCKER_BASE_NAME }}:latest
-          cache-from: ${{ env.DOCKER_BASE_NAME }}:latest
+          tags: ghcr.io/slashnephy/samekan052:latest
+          cache-from: ghcr.io/slashnephy/samekan052:latest
           build-args: |
             BUILDKIT_INLINE_CACHE=1
             USERS=samekan822,samekan1
+            TWITTER_CK=${{ secrets.TWITTER_CK }}
+            TWITTER_CS=${{ secrets.TWITTER_CS }}
+            TWITTER_AT=${{ secrets.TWITTER_AT }}
+            TWITTER_ATS=${{ secrets.TWITTER_ATS }}
+
+      - name: Build & Push (kashiwa052)
+        uses: docker/build-push-action@v2
+        env:
+          DOCKER_BUILDKIT: 1
+        with:
+          file: ci.Dockerfile
+          push: true
+          tags: ghcr.io/slashnephy/kashiwa052:latest
+          cache-from: ghcr.io/slashnephy/kashiwa052:latest
+          build-args: |
+            BUILDKIT_INLINE_CACHE=1
+            USERS=Hytusx,KashEight
+            TWITTER_CK=${{ secrets.TWITTER_CK }}
+            TWITTER_CS=${{ secrets.TWITTER_CS }}
+            TWITTER_AT=${{ secrets.TWITTER_AT }}
+            TWITTER_ATS=${{ secrets.TWITTER_ATS }}
+
+      - name: Build & Push (karasu052)
+        uses: docker/build-push-action@v2
+        env:
+          DOCKER_BUILDKIT: 1
+        with:
+          file: ci.Dockerfile
+          push: true
+          tags: ghcr.io/slashnephy/karasu052:latest
+          cache-from: ghcr.io/slashnephy/karasu052:latest
+          build-args: |
+            BUILDKIT_INLINE_CACHE=1
+            USERS=bakarasukun
             TWITTER_CK=${{ secrets.TWITTER_CK }}
             TWITTER_CS=${{ secrets.TWITTER_CS }}
             TWITTER_AT=${{ secrets.TWITTER_AT }}
