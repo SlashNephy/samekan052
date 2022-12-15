@@ -1,0 +1,55 @@
+name: 'Build Image'
+
+on:
+  push:
+
+  schedule:
+    - cron: '0 * * * *'
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+  actions: read
+  security-events: write
+
+jobs:
+  build-samekan:
+    uses: SlashNephy/.github/.github/workflows/docker-build.yml@master
+    with:
+      image-name: ghcr.io/slashnephy/samekan052
+      image-platforms: linux/amd64
+      dockerfile: ci.Dockerfile
+      build-args: |
+        USERS=samekan822,samekan1
+        TWITTER_CK=${{ secrets.TWITTER_CK }}
+        TWITTER_CS=${{ secrets.TWITTER_CS }}
+        TWITTER_AT=${{ secrets.TWITTER_AT }}
+        TWITTER_ATS=${{ secrets.TWITTER_ATS }}
+
+  build-kashiwa:
+    uses: SlashNephy/.github/.github/workflows/docker-build.yml@master
+    with:
+      image-name: ghcr.io/slashnephy/kashiwa052
+      image-platforms: linux/amd64
+      dockerfile: ci.Dockerfile
+      build-args: |
+        USERS=Hytusx,KashEight
+        TWITTER_CK=${{ secrets.TWITTER_CK }}
+        TWITTER_CS=${{ secrets.TWITTER_CS }}
+        TWITTER_AT=${{ secrets.TWITTER_AT }}
+        TWITTER_ATS=${{ secrets.TWITTER_ATS }}
+
+  build-karasu:
+    uses: SlashNephy/.github/.github/workflows/docker-build.yml@master
+    with:
+      image-name: ghcr.io/slashnephy/karasu052
+      image-platforms: linux/amd64
+      dockerfile: ci.Dockerfile
+      build-args: |
+        USERS=bakarasukun
+        TWITTER_CK=${{ secrets.TWITTER_CK }}
+        TWITTER_CS=${{ secrets.TWITTER_CS }}
+        TWITTER_AT=${{ secrets.TWITTER_AT }}
+        TWITTER_ATS=${{ secrets.TWITTER_ATS }}
