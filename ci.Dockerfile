@@ -55,7 +55,7 @@ ARG TWITTER_AT
 ARG TWITTER_ATS
 RUN python testMecab.py
 
-ADD http://worldclockapi.com/api/json/utc/now /tmp/cacheburst
+ADD https://www.randomnumberapi.com/api/v1.0/random /tmp/cacheburst
 RUN python fetchTweets.py \
     && python generateModel.py \
     && rm /tmp/cacheburst
