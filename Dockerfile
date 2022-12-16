@@ -1,21 +1,10 @@
-FROM python:3.8-alpine
+FROM python:3.8-slim-bullseye
 
 COPY requirements.txt /tmp/
-RUN apk add --update --no-cache --virtual .build-deps \
-        build-base \
-        git \
-        make \
-        bash \
-        curl \
-        file \
-        openssl \
-        perl \
-        sudo \
-        swig \
-    \
-    # runtime
-    && apk add --no-cache \
-        libstdc++ \
+ENV BUILD_DEPENDENCIES="build-essential git curl file sudo"
+ARG SUDO_FORCE_REMOVE="yes"
+RUN apt update \
+    && apt install -y --no-install-recommends $BUILD_DEPENDENCIES \
     # mecab
     && mkdir -p /tmp/mecab \
     && cd /tmp/mecab \
@@ -30,7 +19,12 @@ RUN apk add --update --no-cache --virtual .build-deps \
     && mkdir -p /tmp/mecab-ipadic-neologd \
     && cd /tmp/mecab-ipadic-neologd \
     && git clone --depth 1 https://github.com/neologd/mecab-ipadic-neologd . \
-    && ./bin/install-mecab-ipadic-neologd -n -y \
+    && ./bin/install-mecab-ipadic-neologd \
+        -n \
+        -y \
+        --install_adjective_exp \
+        --install_infreq_datetime \
+        --install_infreq_quantity \
     && rm -rf /tmp/mecab-ipadic-neologd \
     \
     # pip
@@ -40,14 +34,18 @@ RUN apk add --update --no-cache --virtual .build-deps \
         -r /tmp/requirements.txt \
     && rm /tmp/requirements.txt \
     \
-    && apk del --purge .build-deps
+    ## Cleanup
+    && apt purge -y $BUILD_DEPENDENCIES \
+    && apt autoremove -y \
+    && apt clean -y \
+    && rm -rf /var/lib/apt/lists
 
 WORKDIR /app
 RUN mkdir dist
 
 COPY testMecab.py fetchTweets.py generateModel.py /app/
-ARG MECAB_DICTIONARY_PATH=/usr/local/lib/mecab/dic/mecab-ipadic-neologd
-ARG USERS=samekan822
+ARG MECAB_DICTIONARY_PATH="/usr/local/lib/mecab/dic/mecab-ipadic-neologd"
+ARG USERS="samekan822"
 ARG TWITTER_CK
 ARG TWITTER_CS
 ARG TWITTER_AT
