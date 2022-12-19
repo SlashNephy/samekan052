@@ -1,10 +1,14 @@
 FROM python:3.8-slim-bullseye
 
-COPY requirements.txt /tmp/
 ENV BUILD_DEPENDENCIES="build-essential git curl file sudo"
 ARG SUDO_FORCE_REMOVE="yes"
+ENV LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/lib"
+
+COPY requirements.txt /tmp/
+
 RUN apt update \
     && apt install -y --no-install-recommends $BUILD_DEPENDENCIES \
+    \
     # mecab
     && mkdir -p /tmp/mecab \
     && cd /tmp/mecab \
