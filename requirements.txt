@@ -1,4 +1,4 @@
-markovify==0.8.2
+markovify==0.9.4
 tweepy==3.8.0
 Flask==2.2.2
 mecab-python3==0.996.5
