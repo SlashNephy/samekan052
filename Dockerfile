@@ -1,4 +1,4 @@
-FROM python:3.8-slim-bullseye
+FROM python:3.11-slim-bullseye
 
 ENV BUILD_DEPENDENCIES="build-essential git curl file sudo"
 ARG SUDO_FORCE_REMOVE="yes"
