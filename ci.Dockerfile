@@ -1,4 +1,4 @@
-FROM python:3.11-slim-bullseye@sha256:ec50272bc293f1b6cab51d923ab8641b193a3d6ba813b9214a29fd0b9e930047
+FROM python:3.11-slim-bullseye@sha256:48c5fa0689f8d7de2cd117b9a51d4c9baeb1337d31fb0c0345a657731ac0ab36
 
 ENV BUILD_DEPENDENCIES="build-essential git curl file sudo"
 ARG SUDO_FORCE_REMOVE="yes"
