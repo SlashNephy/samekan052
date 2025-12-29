@@ -49,7 +49,7 @@ jobs:
             type=sha
 
       - name: Build Image & Push
-        uses: docker/build-push-action@1104d471370f9806843c095c1db02b5a90c5f8b6 # v3
+        uses: docker/build-push-action@1104d471370f9806843c095c1db02b5a90c5f8b6 # v3.3.1
         with:
           push: true
           file: ci.Dockerfile
